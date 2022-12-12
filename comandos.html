@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comandos</title>
+</head>
+<body>
+    <pre>
+<b>Comandos básicos administración usuarios desde PowerShell</b>
+
+Crear usuario (sin contraseña)
+	New-LocalUser usulocal -NoPassword
+
+Crear usuario deshabilitado
+	New-LocalUser usulocal -NoPassword -Disabled
+
+Crear usuario con más información
+	New-localUser usulocal -NoPassword -Description "Es usuario de prueba" -FullName "Usuario local"
+
+Crear usuario con contraseña
+	$contrasena = ConvertTo-SecureString "Prueba000" -AsPlainText -Force
+	New-LocalUser usulocal -Password $contrasena
+
+Modificar usuario
+	Set-LocalUser usulocal -Description "Nueva descripcion"
+
+Obtener usuario
+	Get-LocalUser usulocal
+
+Borrar usuario
+	Remove-LocalUser usulocal
+
+Habilitar y deshabilitar usuario
+	Enable-LocalUser usulocal
+	Disable-LocalUser usulocal
+
+Crear grupo
+	New-LocalGroup "grupo prueba" -Description "Es grupo de prueba"
+
+Modificar grupo
+	Set-LocalGroup "grupo prueba" -Description "Descripción prueba modificada"
+
+Renombrar grupo
+	Rename-LocalGroup "grupo prueba" -NewName "nuevo grupo prueba"
+
+Obtener grupo
+	Get-LocalGroup "nuevo grupo prueba"
+
+Borrar grupo
+	Remove-LocalGroup "nuevo grupo prueba"
+
+Añadir usuario a grupo
+	Add-LocalGroupMember -Group "grupo prueba" -Member usulocal
+
+Añadir varios usuarios a grupo
+	Add-LocalGroupMember -Group "grupo prueba" -Member usulocal,usulocal2
+
+Eliminar usuario de grupo
+	Remove-LocalGroupMember -Group "grupo prueba" -Member usulocal
+
+Obtener miembros de un grupo
+	Get-LocalGroupMember "grupo prueba"
+
+<b>2. Administración de objetos de Directorio Activo</b>
+Podemos recorrer del Directorio Activo desde la línea de comandos, usando:
+	Import-Module Activedirectory	
+	Set-Location AD:   (cd AD:)
+		cd "DC=smr2rag,DC=local"
+
+<b>Nombre Distinguido</b>
+El "Nombre Distinguido" o "Distinguished Name" es un forma de denominar a los objetos de un dominio basada en la estructura en forma de árbol de Active Directory. 
+Al ejecutar desde la línea de comandos dsquery user se obtiene :
+
+El comando dsquery sirve para hacer preguntas sobre los objetos del dominio (dsquery user, dsquery ou) Nomenclatura usada:
+
+DC=Controlador de Dominio
+OU=Unidad Organizativa
+CN=Nombre de Usuario o Grupo
+
+Ejemplo:
+smr2rag.local
+UO1
+        UO2
+               Grupo1
+                Grupo2
+                     usuario1
+                     usuario2
+ UO3
+                 Grupo3
+                      usuario4
+
+El usuario1 quedaría definido por:
+CN=usuario1,CN=Grupo2,OU=UO2,OU=UO1,DC=smr2rag,DC=local
+
+El usuario4 quedaría definido por:
+CN=usuario4,CN=Grupo3,OU=UO3,DC=smr2rag,DC=local
+
+
+<b>UNIDADES ORGANIZATIVAS</b>
+
+Nueva Unidad Organizativa
+	New-ADOrganizationalUnit -Name "Empresa"
+
+Obtener OU (es necesario especificar el Distinguished Name)
+	Get-ADOrganizationalUnit 'OU=Empresa,DC=smr2rag,DC=local'
+
+Permitir borrado de la OU
+	Set-ADOrganizationalUnit 'OU=Empresa,DC=smr2rag,DC=local' -ProtectedFromAccidentalDeletion $false
+
+Eliminar la OU
+	Remove-ADOrganizationalUnit 'OU=Empresa,DC=smr2rag,DC=local' -Confirm:$false
+
+Crear Unidad Organizativa dentro de otra
+	New-ADOrganizationalUnit 'Empresa' -Path  "OU=Empresa,DC=smr2rag,DC=local"
+
+
+<b>USUARIOS</b>
+
+Nuevo usuario (sin contraseña) -> el usuario  sin contraseña no se podría habilitar (Por defecto el usuario se creará en la carpeta Users)
+	New-ADUser "Pepe"
+	New-ADUser -Name "Pepe" -Surname "Perez" -Description "Trabajador de la empresa"
+
+Asignar usuario con contraseña y habilitar usuario
+	New-ADUser -Name "Pepe" -AccountPassword (ConvertTo-SecureString -AsPlainText "Prueba000" -Force) 
+	Set-ADUser "Pepe" -Enabled $true
+
+Crear usuario habilitado
+	New-ADUser -Name "Pepe" -AccountPassword (ConvertTo-SecureString -AsPlainText "Prueba000" -Force) -Enable $true
+
+Obtener datos del usuario
+	Get-ADUser "Pepe"
+
+Borrar usuario
+	Remove-ADUser "Pepe" -Confirm:$false
+
+Podríamos usar también el DISTINGUISHED NAME del usuario
+	Get-ADUser "CN=Pepe,CN=Users,DC=smr2rag,DC=local"
+
+Otra forma de habilitar y deshabilitar cuentas
+	Enable-ADAccount "juan"
+	Disable-ADAccount "juan"
+
+<b>USUARIOS-UNIDAD ORGANIZATIVA</b>
+
+Crear usuario dentro de una Unidad Organizativa (especificar Distinguished Name)
+	New-ADUser "Maria" -Path "OU=Empresa,DC=smr2rag,DC=local"
+	New-ADUser -Name "Maria" -Path "OU=Empresa,DC=smr2rag,DC=local" -AccountPassword (ConvertTo-SecureString -AsPlainText "Prueba000" -Force) -Enable $true
+
+Mover usuario a Unidad Organizativa (es necesario especifica DS del usuario)
+	New-ADUser "juan" #se crea en la carpeta Users
+	Get-ADUser "juan" #nos ayuda a ver el DistinguishedName
+	Move-ADObject -Identity "CN=juan,CN=Users,DC=smr2rag,DC=local" -TargetPath "OU=Empresa,DC=smr2rag,DC=local"
+
+<b>GRUPOS</b>
+
+Crear un grupo
+	New-ADGroup "Tecnicos" -GroupScope Global
+
+Crear grupo dentro de Unidad Organizativa (especificar Distinguished Name)
+	New-ADGroup "Tecnicos" -Path "OU=Empresa,DC=smr2rag,DC=local" -GroupScope Global
+
+Obtener grupo
+	Get-ADGroup "Tecnicos"
+
+Borrar grupo
+	Remove-ADGroup "Tecnicos" -Confirm:$false
+
+Añadir usuario a grupo (aunque el grupo se encuentre dentro de una Unidad Organizativa, NO es necesario especificar su Distinguished Name)
+	Add-ADGroupMember "Tecnicos" -Members "juan"
+
+Añadir varios usuarios a grupo
+	Add-ADGroupMember "Tecnicos" -Members "juan","pepe"
+
+Ver usuarios de un grupo
+	Get-ADGroupMember "Tecnicos"
+
+Eliminar usuarios de un grupo
+	Remove-ADGroupMember "Tecnicos" -Members "pepe" -Confirm:$false
+    
+Borrar un grupo
+	Remove-ADGroup "Tecnicos" -Confirm:$false
+
+
+
+En el siguiente enlace se muestra un listado de cmdlets para Directorio Activo:
+https://blogs.itpro.es/samuellt/2012/01/31/cmdlets-de-power-shell-para-active-directory/
+
+
+    </pre>
+</body>
+</html>
