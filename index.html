@@ -11,13 +11,13 @@
 <a href="3.1 Usuarios y Grupos.pdf">3.1:</a>
 (windows cliente local)
 - lusrmgr.msc (crear usuarios y grupos y editar estos)
-- secpol.msc (editar directivas locales)
+- secpol.msc (editar directivas locales) <b>!</b>
 - directivas de contraseña (en directivas de cuenta)
 - permisos en carpetas (propiedades y seguridad)
 (windows server)
 - restablecer contraseña
 - horarios de acceso
-- crear equipos
+- crear equipos, usuarios
 - crear grupos y UO
 - plantillas
 - eliminar UO
@@ -35,10 +35,10 @@ en el servidor, reinicando el servidor y cerrando sesion en el cliente.
     </pre>
     <a href="comandos.html">COMANDOS :D</a>
     <pre>
-<a href="3.4 Directivas de Grupo.pdf">3.4:</a>
+<a href="3.4 Directivas de Grupo.pdf">3.4: <b>!</b></a>
 (hasta ahora todo era en usuarios y equipos de AD, ahora es en Administrador de directivas)
 - crear GPO en grupo de objetos de directivas
-- vincular GPO con click derecho en la UO (y editar click derecho en la GPO) y editaremos sistema y panel de control.
+- vincular GPO con click derecho en la UO (y editar click derecho en la GPO) y editaremos sistema y panel de control
 - tambien red y conexiones de red
 - tambien en config de seguridad y directiva de cuenta
     </pre>
@@ -57,6 +57,13 @@ en el servidor, reinicando el servidor y cerrando sesion en el cliente.
 - o compartimos creando un nuevo recurso compartido
 (Activar la detección de redes y el uso compartido de archivos)
 (Comprobar en caracteristicas de windows la compatibilidad con el protocolo SMB1.0)
+    </pre>
+    <pre>
+<a href="4.2 DIRECTORIOS COMPARTIDOS II.pdf">4.2:</a>
+- permisos de las carpetas compartidas
+- recursos especiales $, para entrar o lo escribimos arriba o win+R (RUTA:\\NETBIOS\CARPETA)
+- script (el script lo creamos en netlogon) y creamos el script.bat (net use h: \\nombremaquina.tudominio.local\Ruta)
+configuramos los usuarios en perfil y listo
     </pre>
 </body>
 </html>
