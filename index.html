@@ -16,9 +16,9 @@ Else { lo que pasa si no se cumple }
 <b><u>Operadores Logicos:</b></u>
 
 || es "o"
-&& es "Y"
+&& es "y"
 == es "igual"
-!= es "desigual
+!= es "desigual"
 > es "mayor que"
 < es "menor que"
 >= es "mayor o igual"
@@ -29,6 +29,15 @@ Else { lo que pasa si no se cumple }
 while (lo que se tiene que cumplir) { lo que se repite} significa "mientras que..."
 for (definimos variable, lo que se tiene que cumplir, y que hace cada vez que termina) { lo que se repite }  significa "para x, mientras que x..."
 do { lo que se repite } while ( lo que se tiene que cumplir) significa que mientras que... pues se hace eso, es lo mismo XD.
+
+<b><u>Arrays:</b></u>
+
+Ejemplo para la explicacion:
+
+let numeros = new Array(10);                                                    = aqui decimos que numeros es el array (en el parentesis va el numero de numeros)
+        for (let f=0; f < numeros.length; f++) {                                = aqui definimos f que es contador, que va a dar tantas vueltas como la longitud del array y cada vuelta suma uno
+            numeros[f]=parseInt((Math.random()*10)+1);                          = generamos los numeros randoms para cada numero (f) por cada vuelta que pega con el rango de numeros que le das
+        }
     </pre>
 </body>
 </html>
