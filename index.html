@@ -8,81 +8,27 @@
 </head>
 <body>
     <pre>
-<a href="3.1 Usuarios y Grupos.pdf">3.1:</a>
-(windows cliente local)
-- lusrmgr.msc (crear usuarios y grupos y editar estos)
-- secpol.msc (editar directivas locales) <b>!</b>
-- directivas de contraseña (en directivas de cuenta)
-- permisos en carpetas (propiedades y seguridad)
-(windows server)
-- restablecer contraseña
-- horarios de acceso
-- crear equipos, usuarios
-- crear grupos y UO
-- plantillas
-- eliminar UO
-    </pre>
-    <pre>
-<a href="3.2 CONTROLADOR DE DOMINIO APAGADO.pdf">3.2:</a>
-- saber que un usuario creado en el servidor te deja acceder a el cuando has iniciado
-sesion alguna vez, ya que se usa de forma local, pero si no has iniciado sesion nunca 
-no te dejara, luego la unica forma de que te rechace entrar, es eliminando el usuario 
-en el servidor, reinicando el servidor y cerrando sesion en el cliente
-    </pre>
-    <pre>
-<a href="3.3 Usuarios y Grupos - PowerShell.pdf">3.3:</a>
-- gestion a traves de powershell (nos da los comandos)
-    </pre>
-    <a href="comandos.html">COMANDOS :D</a>
-    <pre>
-<a href="3.4 Directivas de Grupo.pdf">3.4: <b>!</b></a>
-(hasta ahora todo era en usuarios y equipos de AD, ahora es en Administrador de directivas)
-- crear GPO en grupo de objetos de directivas
-- vincular GPO con click derecho en la UO (y editar click derecho en la GPO) y editaremos sistema y panel de control
-- tambien red y conexiones de red
-- tambien en config de seguridad y directiva de cuenta
-    </pre>
-    <pre>
-<a href="3.5 RELACIONES DE CONFIANZA Y DELEGACION DE CONTROL.pdf">3.5:</a>
-- nos vamos ahora a DNS y configuramos reenviadores con el nombre del servidor (FQDN) y la ip (lo hacemos en los dos dominios)
-- ahora dominios y confianzas de AD, propiedades de nuestro server y confianzas > y nueva confianza y seguir los pasos (solo lo haces desde uno)
-        - bosque, bidireccional, ambos, admin/passwd, y en todo el bosque y confirmamos
-- cambiamos dominios en usuarios y equipos de AD y primero tendremos que delgar control (damos permisos, etc)
-    </pre>
-    <hr>
-    <pre>
-<a href="4.1 DIRECTORIOS COMPARTIDOS.pdf">4.1:</a>
-- administracion de equipos y recursos compartidos
-- creamos carpeta y compartimos y luego compartimos avanzado
-- o compartimos creando un nuevo recurso compartido
-(Activar la detección de redes y el uso compartido de archivos)
-(Comprobar en caracteristicas de windows la compatibilidad con el protocolo SMB1.0)
-    </pre>
-    <pre>
-<a href="4.2 DIRECTORIOS COMPARTIDOS II.pdf">4.2:</a>
-- permisos de las carpetas compartidas
-- recursos especiales $, para entrar o lo escribimos arriba o win+R (RUTA:\\NETBIOS\CARPETA)
-- script (el script lo creamos en netlogon) y creamos el script.bat (net use h: \\nombremaquina.tudominio.local\Ruta)
-configuramos los usuarios en perfil y listo
-    </pre>
-    <pre>
-<a href="4.3 PERFILES PREDETERMINADOS.pdf">4.3:</a>
-- modificamos un usuario y copiamos la carpeta del %usuario" y la metemos en .default, que se debe de poner para que se vean las paginas ocultas
-    </pre>
-    <pre>
-<a href="4.4 PERFILES MOVILES.pdf">4.4:</a>
-- creamos usuario
-- carpeta compartida (en C:/) 
-- permisos en recursos y permisos en carpeta
-- iniciamos sesion en cliente
-- conectamos de unidad de red (letra y carpeta) y conectar al iniciar sesion
-- agregar carpeta al usuario
-(incompleto)
+<b><u>Condicionales:</b></u>
 
-    </pre>
-    <pre>
-4.5:
-- propiedades de discos, cuota (activar), predeterminado (para todos los usuarios), y usuario a usuario     
+If (lo que se tiene que cumplir) { lo que pasa }
+Else { lo que pasa si no se cumple }
+
+<b><u>Operadores Logicos:</b></u>
+
+|| es "o"
+&& es "Y"
+== es "igual"
+!= es "desigual
+> es "mayor que"
+< es "menor que"
+>= es "mayor o igual"
+<= es "menor o igual"
+
+<b><u>Bucles:</b></u>
+
+while (lo que se tiene que cumplir) { lo que se repite} significa "mientras que..."
+for (definimos variable, lo que se tiene que cumplir, y que hace cada vez que termina) { lo que se repite }  significa "para x, mientras que x..."
+do { lo que se repite } while ( lo que se tiene que cumplir) significa que mientras que... pues se hace eso, es lo mismo XD.
     </pre>
 </body>
 </html>
